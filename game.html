@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="game.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+
+</head>
+<body> 
+<ul class="navbar">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="postcard.html">Postcard</a></li>
+
+   
+</ul>
+<section>
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+    <div class="wave wave4"></div>
+</section>
+</div>
+    <script>
+     /* p5.js Sketch Variables */
+    // Declare all images, audio, and variables used in the sketch
+    // Declare all images, audio, and variables used in the sketch
+// Declare all images, audio, and variables used in the sketch
+let waterImg;
+let cloudsImg;
+let trialImg;
+let boyIdleImg;
+let boyWalk1Img;
+let boyWalk2Img;
+let postcardImg;
+let postcard2Img;
+let postcard3Img;
+let postcard4Img;
+let postcard5Img;
+let soundIconImg;
+let levelImg;
+let audio;
+let customFont;
+let oldman;
+let boyX = 250;
+let boyY = 450;
+let jumpVelocity = 0;
+let isJumping = false;
+
+let walkingFrame = 0;
+let walkingSpeed = 5;
+let isMoving = false;
+
+let postcardX = 360;
+let postcardY = 290;
+let showPostcard = true;
+let showTextBox = false;
+let transitionFrame = 0;
+
+let secondPostcardX = 150;
+let secondPostcardY = 150;
+let showSecondPostcard = true;
+let secondPostcardText = "To Future Me,I'm sitting here, watching the waves crash and thinking about how far you've come. The world can feel so big, but remember, you are bigger than your fears. Keep pushing forward, even when it's hard. You've got this. If you ever feel lost, come back to the pier—it will remind you of who you are.With love,Me";
+let transitionFrame2 = 0;
+
+let thirdPostcardX = 590;
+let thirdPostcardY = 180;
+let showthirdPostcard = true;
+let thirdPostcardText = "The pier always makes me think of you. I wish we could go back to that moment—before the fights, before the distance. I know I messed up, and I wish I could make things right. I hope you're doing okay, wherever you are. I'll never forget the time we shared. Take care,A ";
+let transitionFrame3 = 0;
+
+let fourthPostcardX = 1020;
+let fourthPostcardY = 180;
+let showfourthPostcard = true;
+let fourthPostcardText = "The pier always makes me think of you. I wish we could go back to that moment—before the fights, before the distance. I know I messed up, and I wish I could make things right. I hope you're doing okay, wherever you are. I'll never forget the time we shared. Take care,A ";
+let transitionFrame4 = 0;
+
+let fifthPostcardX = 1300;
+let fifthPostcardY = 130;
+let showfifthPostcard = true;
+let fifthPostcardText = "I came to the pier to clear my head, but all I can think about is you. The water is calm tonight, but my heart isn’t. I think this is goodbye. I’ll always care for you, but we both know we’re drifting apart. I’ll miss you, but I think it’s time for us to let go. Goodbye, K  ";
+let transitionFrame5 = 0;
+
+let soundIconX = 480;
+let soundIconY = 200;
+let soundIconSize = 40;
+
+let textToDisplay = "This is the text that will appear like a typewriter effect.";
+let displayedText = "";
+let charIndex = 0;
+let typingSpeed = 1;
+
+let platforms = [
+  { x: 420, y: 360, w: 120, h: 20 },
+  { x: 240, y: 410, w: 100, h: 20 },
+  { x: 280, y: 280, w: 100, h: 20 },
+  { x: 170, y: 220, w: 100, h: 20 },
+  { x: 310, y: 150, w: 150, h: 20 },
+  { x: 520, y: 190, w: 100, h: 20 },
+  { x: 640, y: 250, w: 100, h: 20 },
+  { x: 780, y: 220, w: 100, h: 20 },
+  { x: 900, y: 190, w: 100, h: 20 },
+  { x: 1020, y: 250, w: 100, h: 20 },
+  { x: 1200, y: 250, w: 100, h: 20 },
+  { x: 1350, y: 200, w: 100, h: 20 },
+];
+
+function preload() {
+  waterImg = loadImage("Image/Water.jpeg");
+  cloudsImg = loadImage("Image/Clouds.jpeg");
+  trialImg = loadImage("Image/Trial.jpeg");
+  boyIdleImg = loadImage("Image/boy_idle.png");
+  boyWalk1Img = loadImage("Image/boy_walk1.png");
+  boyWalk2Img = loadImage("Image/boy_walk2.png");
+  postcardImg = loadImage("Image/postcard.png");
+  postcard2Img = loadImage("Image/postcard opening.png");
+  postcard3Img = loadImage("Image/postcard.png")
+  postcard4Img = loadImage("Image/postcard.png")
+  postcard5Img = loadImage("Image/postcard.png")
+  soundIconImg = loadImage("Image/sound.png");
+  customFont = loadFont("PixelifySans-VariableFont_wght.ttf");
+  levelImg = loadImage("Image/Levels.png");
+  oldman = loadImage("Image/Old man.png");
+}
+
+function setup() {
+  let canvas = createCanvas(1500,600);
+  canvas.id("sketchCanvas");
+  canvas.position(0, 50);
+}
+
+function draw() {
+  background(0);
+
+  isMoving = false;
+  if (keyIsDown(LEFT_ARROW)) {
+    boyX -= walkingSpeed;
+    isMoving = true;
+  }
+  if (keyIsDown(RIGHT_ARROW)) {
+    boyX += walkingSpeed;
+    isMoving = true;
+  }
+
+  if (isJumping) {
+    boyY += jumpVelocity;
+    jumpVelocity += 0.5;
+
+    if (boyY >= 450) {
+      boyY = 450;
+      isJumping = false;
+      jumpVelocity = 0;
+    }
+  }
+
+  let boyImg;
+  if (isJumping) {
+    boyImg = boyIdleImg;
+  } else if (isMoving) {
+    boyImg = walkingFrame < 15 ? boyWalk1Img : boyWalk2Img;
+    walkingFrame = (walkingFrame + 1) % 30;
+  } else {
+    boyImg = boyIdleImg;
+  }
+
+  push();
+  if (keyIsDown(LEFT_ARROW)) {
+    scale(-1, 1);
+    image(boyImg, -boyX - boyImg.width / 8, boyY, boyImg.width / 8, boyImg.height / 8);
+  } else {
+    scale(1, 1);
+    image(boyImg, boyX, boyY, boyImg.width / 8, boyImg.height / 8);
+  }
+  pop();
+
+  platforms.forEach((platform) => {
+    image(levelImg, platform.x, platform.y, platform.w, platform.h);
+  });
+
+  let lastPlatform = platforms[platforms.length - 1];
+  image(oldman, lastPlatform.x + 50, lastPlatform.y - 40, oldman.width, oldman.height);
+
+  platforms.forEach((platform) => {
+    if (
+      boyX + 30 > platform.x &&
+      boyX + 30 < platform.x + platform.w &&
+      boyY + 50 <= platform.y &&
+      boyY + 50 + jumpVelocity >= platform.y
+    ) {
+      boyY = platform.y - 90;
+      jumpVelocity = 0;
+      isJumping = false;
+    }
+  });
+
+  if (showPostcard) {
+    image(postcardImg, postcardX, postcardY, postcardImg.width / 4, postcardImg.height / 4);
+
+    if (dist(boyX, boyY, postcardX, postcardY) < 50) {
+      fill(255, 255, 0);
+      textSize(16);
+      text("Press ENTER to interact", postcardX - 40, postcardY - 20);
+    }
+  }
+
+  if (transitionFrame > 0 && transitionFrame < 30) {
+    image(postcard2Img, postcardX, postcardY, postcard2Img.width / 8, postcard2Img.height / 8);
+    transitionFrame++;
+    if (transitionFrame === 30) {
+      showTextBox = true;
+    }
+  }
+
+  if (showSecondPostcard) {
+    image(postcardImg, secondPostcardX, secondPostcardY, postcardImg.width / 4, postcardImg.height / 4);
+
+    if (dist(boyX, boyY, secondPostcardX, secondPostcardY) < 50) {
+      fill(255, 255, 0);
+      textSize(16);
+      text("Press ENTER to interact", secondPostcardX - 50, secondPostcardY - 20);
+    }
+  }
+
+  if (transitionFrame2 > 0 && transitionFrame2 < 30) {
+    image(postcard2Img, secondPostcardX, secondPostcardY, postcard2Img.width / 8, postcard2Img.height / 8);
+    transitionFrame2++;
+    if (transitionFrame2 === 30) {
+      showTextBox = true;
+    }
+  }
+
+  // Third Postcard Logic
+  if (showthirdPostcard) {
+    image(postcardImg, thirdPostcardX, thirdPostcardY, postcardImg.width / 4, postcardImg.height / 4);
+
+    if (dist(boyX, boyY, thirdPostcardX, thirdPostcardY) < 50) {
+      fill(255, 255, 0);
+      textSize(16);
+      text("Press ENTER to interact", thirdPostcardX - 50, thirdPostcardY - 20);
+    }
+  }
+
+  if (transitionFrame3 > 0 && transitionFrame3 < 30) {
+    image(postcard2Img, thirdPostcardX, thirdPostcardY, postcard2Img.width / 8, postcard2Img.height / 8);
+    transitionFrame3++;
+    if (transitionFrame3 === 30) {
+      showTextBox = true;
+    }
+  }
+
+  // Fourth Postcard Logic
+  if (showfourthPostcard) {
+    image(postcardImg, fourthPostcardX, fourthPostcardY, postcardImg.width / 4, postcardImg.height / 4);
+
+    if (dist(boyX, boyY, fourthPostcardX, fourthPostcardY) < 50) {
+      fill(255, 255, 0);
+      textSize(16);
+      text("Press ENTER to interact", fourthPostcardX - 50, fourthPostcardY - 20);
+    }
+  }
+
+  if (transitionFrame4 > 0 && transitionFrame4 < 30) {
+    image(postcard2Img, fourthPostcardX, fourthPostcardY, postcard2Img.width / 8, postcard2Img.height / 8);
+    transitionFrame4++;
+    if (transitionFrame4 === 30) {
+      showTextBox = true;
+    }
+  }
+
+  // Fifth Postcard Logic
+  if (showfifthPostcard) {
+    image(postcardImg, fifthPostcardX, fifthPostcardY, postcardImg.width / 4, postcardImg.height / 4);
+
+    if (dist(boyX, boyY, fifthPostcardX, fifthPostcardY) < 50) {
+      fill(255, 255, 0);
+      textSize(16);
+      text("Press ENTER to interact", fifthPostcardX - 50, fifthPostcardY - 20);
+    }
+  }
+
+  if (transitionFrame5 > 0 && transitionFrame5 < 30) {
+    image(postcard2Img, fifthPostcardX, fifthPostcardY, postcard2Img.width / 8, postcard2Img.height / 8);
+    transitionFrame5++;
+    if (transitionFrame5 === 30) {
+      showTextBox = true;
+    }
+  }
+
+  // Show text box if triggered
+  if (showTextBox) {
+    fill(0, 0, 0, 150);
+    rect(50, 50, 500, 200, 10);
+    fill(255);
+    textSize(20);
+
+    // Display text for each postcard
+    if (!showPostcard) {
+      text(
+        "I came back to the pier today, thinking about us. I've been holding onto a lot of hurt, but sitting here by the water has made me realize it's time to let it go. I forgive you. I hope you find peace, too. Maybe one day, we'll find our way back to each other.   Until then,   J",
+        80,
+        90,
+        440
+      );
+    } else if (!showSecondPostcard) {
+      text(
+        secondPostcardText,
+        100,
+        150,
+        400
+      );
+    } else if (!showthirdPostcard) {
+      text(
+        thirdPostcardText,
+        100,
+        70,
+        400
+      );
+    } else if (!showfourthPostcard) {
+      text(
+        fourthPostcardText,
+        100,
+        70,
+        400
+      );
+    } else if (!showfifthPostcard) {
+      text(
+        fifthPostcardText,
+        100,
+        70,
+        400
+      );
+    }
+
+    textSize(16);
+    text("Press ESC to close", 60, 65);
+
+    // Draw sound icon
+    image(soundIconImg, soundIconX, soundIconY, soundIconSize, soundIconSize);
+  }
+}
+
+function keyPressed() {
+  if (keyCode === UP_ARROW && !isJumping) {
+    isJumping = true;
+    jumpVelocity = -10;
+  }
+
+  if (keyCode === ENTER) {
+    // Check first postcard interaction
+    if (showPostcard && dist(boyX, boyY, postcardX, postcardY) < 50) {
+      showPostcard = false;
+      transitionFrame = 1;
+    }
+
+    // Check second postcard interaction
+    if (showSecondPostcard && dist(boyX, boyY, secondPostcardX, secondPostcardY) < 50) {
+      showSecondPostcard = false;
+      transitionFrame2 = 1;
+    }
+
+    // Check third postcard interaction
+    if (showthirdPostcard && dist(boyX, boyY, thirdPostcardX, thirdPostcardY) < 50) {
+      showthirdPostcard = false;
+      transitionFrame3 = 1;
+    }
+
+    // Check fourth postcard interaction
+    if (showfourthPostcard && dist(boyX, boyY, fourthPostcardX, fourthPostcardY) < 50) {
+      showfourthPostcard = false;
+      transitionFrame4 = 1;
+    }
+
+    // Check fifth postcard interaction
+    if (showfifthPostcard && dist(boyX, boyY, fifthPostcardX, fifthPostcardY) < 50) {
+      showfifthPostcard = false;
+      transitionFrame5 = 1;
+    }
+  }
+
+  if (keyCode === ESCAPE) {
+    showTextBox = false;
+  }
+}
+        </script>
+    
+</body>
+</html>

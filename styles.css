@@ -1,0 +1,78 @@
+/* General Body Styling */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;  /* Center horizontally */
+  align-items: center;  /* Center vertically */
+  flex-direction: column;  /* Stack child elements (header, paragraph, character) */
+  text-align: center;  /* Center text inside body */
+}
+
+/* Heading Styling */
+h1 {
+  color: hsl(0, 88%, 30%);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Improves readability */
+  font-family: 'Biography'; /* Use custom font */
+  font-size: 128px;
+  margin: 0;  /* Remove default margin */
+}
+
+/* Paragraph Styling */
+p {
+  color: white;  /* Make sure text is visible */
+  font-size: 30px;  /* Adjust font size */
+  font-family: 'Biography';
+  margin: 10px 0;  /* Add some margin for spacing */
+}
+
+#arrowImage {
+  margin-top: 0px;  /* Adds space between the paragraph and image */
+  width: 200px;  /* Adjust width of the image if needed */
+  height: auto;  /* Maintain aspect ratio */
+}
+
+/* Game Container */
+#gameContainer {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;  /* Center the game container horizontally */
+  align-items: center;  /* Center the game container vertically */
+  flex-direction: column;
+}
+
+/* Character Styling */
+#character {
+  width: 48px;
+  height: 96px;
+  position: absolute;
+  top: 670px; /* Default position */
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url('boy_idle.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 10; /* Ensure the character appears on top of other elements */
+}
+
+/* Walking State */
+#character.moving {
+  background-image: url('boy_walk1.png');
+  background-size: 192px 96px; /* Adjusted to full body height */
+  animation: walk 0.6s steps(4) infinite;
+}
+
+/* Animation Keyframes */
+@keyframes walk {
+  from {
+    background-position: 0 0; /* Start with the first frame */
+  }
+  to {
+    background-position: -192px 0; /* Move through all frames (192px if you have 4 frames) */
+  }
+}

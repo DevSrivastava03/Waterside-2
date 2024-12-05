@@ -1,0 +1,45 @@
+/* Page Styling */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    position: relative; /* To allow absolute positioning of character */
+    flex-direction: column; /* Stack child elements (header and paragraph) */
+  }
+  
+  #character {
+    width: 48px;  /* Adjust width to match full character width */
+    height: 96px;  /* Double the height to show full body */
+    position: absolute;
+    top: 670px;
+    left: 50%; 
+    transform: translateX(-50%);
+    background-image: url('boy_idle.png');
+    background-size: 48px 96px;  /* Ensure full image is displayed */
+    background-repeat: no-repeat;
+    bottom: 0;
+  }
+  
+  /* Walking State */
+  #character.moving {
+    background-image: url('boy_walk1.png');
+    background-size: 192px 96px; /* Adjusted to full body height */
+    animation: walk 0.6s steps(4) infinite;
+  }
+  
+  
+  p {
+    color: white;
+    font-size: 24px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+    width: 80%; /* Adjust width of paragraph */
+    max-width: 800px; /* Optional max width */
+    z-index: 2; /* Ensure text is above other content */
+  }
+  

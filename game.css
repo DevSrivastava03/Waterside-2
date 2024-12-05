@@ -1,0 +1,161 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw; /* Ensure it takes up full viewport width */
+    background-color: #000000; /* Light gray background */
+    font-family: Arial, sans-serif; /* Clean font */
+    position: relative; /* Allow absolute positioning of iframe */
+    overflow: hidden; /* Prevents scrolling */
+
+}
+
+/* Image Container Styling */
+img {
+    max-width: 100%; /* Full width of container */
+    max-height: 100%; /*Full height of container */
+} 
+/* Image Container Styling */
+#sketch {
+    position: absolute;
+    top: 180px;
+    left: 410px; /* Center horizontally */
+    bottom: 0px;
+    width: 760px;
+    height: 450px;
+    display: flex;
+    justify-content:center;  /* Center horizontally */
+    align-items: center;      /* Center vertically */
+    background-color: #FFE8D2; /* Match body background */
+    z-index: 2; /* Make sure it's on top if needed */
+}
+
+/* Styling for the TV image inside the sketch */
+#sketch img {
+    position: absolute; /* Allows precise placement within #sketch */
+    top: 50%; /* Move to the vertical center */
+    left: 50%; /* Move to the horizontal center */
+    transform: translate(-50%, -55%); /* Correct centering by adjusting origin */
+    max-width: 1900px; /* Increase size */
+    max-height: 1900px; /* Increase size */
+}
+/* Sketch Canvas Styling */
+#sketchCanvas {
+    position: absolute;
+    top: 180px;
+    left: 410px;
+    width: 760px;
+    height: 450px;
+    z-index: 3; /* Higher z-index than the TV image */
+}
+
+section {
+    position: absolute; /* Positioned within the container */
+    width: 100%;
+    height: 100%; /* Match container height */
+    background: transparent; /* Transparent to show body background */
+    overflow: hidden;
+}
+
+section .wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(Images/wave.png);
+    background-size: 1000px 100px;
+}
+
+section .wave.wave1 {
+    animation: animate 30s linear infinite;
+    z-index: 1000;
+    opacity: 1;
+    animation-delay: 0s;
+    bottom: 0;
+}
+
+section .wave.wave2 {
+    animation: animate2 30s linear infinite;
+    z-index: 999;
+    opacity: 0.5;
+    animation-delay: -5s;
+    bottom: 10px;
+}
+
+section .wave.wave3 {
+    animation: animate2 30s linear infinite;
+    z-index: 998;
+    opacity: 0.2;
+    animation-delay: -2s;
+    bottom: 15px;
+}
+
+section .wave.wave4 {
+    animation: animate2 5s linear infinite;
+    z-index: 997;
+    opacity: 0.7;
+    animation-delay: -5s;
+    bottom: 20px;
+}
+
+@keyframes animate {
+    0% {
+        background-position-x: 0;
+    }
+    100% {
+        background-position-x: 1000px;
+    }
+}
+
+@keyframes animate2 {
+    0% {
+        background-position-x: 0;
+    }
+    100% {
+        background-position-x: -1000px;
+    }
+}
+
+
+  
+.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgba(51, 51, 51, 0); /* Transparent background */
+    position: fixed; /* Sticks the navbar at the top */
+    top: 0;
+    width: 100%; /* Full-width navbar */
+    z-index: 1; /* Places it above the video */
+    display: flex; /* Use flexbox to align items */
+    justify-content: space-between; /* Distribute items to left and right */
+    padding: 10px 0px;
+}
+
+.navbar li {
+    list-style: none; /* Remove default list style */
+}
+
+.navbar li a {
+    color: rgb(134, 6, 6);
+    font-family: 'Biography'; /* Match the h1 font */
+    text-align: center;
+    text-decoration: none;
+    font-size: 48px; /* Adjust size for readability */
+    padding: 8px 16px;
+}
+
+.navbar li a:hover {
+    background-color: rgba(51, 51, 51, 0); /* Transparent background on hover */
+}
